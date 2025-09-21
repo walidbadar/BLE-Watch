@@ -3,7 +3,9 @@
 cmake_minimum_required(VERSION 3.20.0)
 
 # This command is necessary to use the display SSD1306
-set(SHIELD ssd1306_128x64)
+if(CONFIG_SSD1306)
+   set(SHIELD ssd1306_128x64)
+endif()
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(ble_watch)
@@ -21,8 +23,14 @@ set (APP_SOURCES
    src/app/src/device_information_service.c
    src/app/src/display_ssd1306.c
    src/app/src/gatt_central.c
-   src/app/src/rtc_ds3231.c
+   #src/app/src/rtc_ds3231.c
 )
+
+if(CONFIG_MAXIM_DS3231)
+   target_sources(app PRIVATE src/app/src/rtc_ds3231.c)
+else()
+   target_sources(app PRIVATE src/app/src/rtc_native.c)
+endif()
 
 target_sources(app PRIVATE 
    src/main.c

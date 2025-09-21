@@ -75,6 +75,10 @@ Receives messages to be shown on the display screen.
 
 ```text
 .
+├── boards
+│   ├── native_sim.conf
+│   ├── native_sim.overlay
+│   └── nrf52840dk_nrf52840.conf
 ├── CMakeLists.txt
 ├── docs
 │   ├── Assigned Numbers.pdf
@@ -99,7 +103,8 @@ Receives messages to be shown on the display screen.
 │   │       ├── device_information_service.c
 │   │       ├── display_ssd1306.c
 │   │       ├── gatt_central.c
-│   │       └── rtc_ds3231.c
+│   │       ├── rtc_ds3231.c
+│   │       └── rtc_native.c
 │   └── main.c
 ```
 
@@ -171,6 +176,26 @@ Test the BLE Watch application with the nRF Connect app, which is available for 
 
 ![BLE Watch](docs/images/ble_watch.gif)
 
+### Build and run with native_sim board
+
+```console
+$ west build -p always -b native_sim .
+$ sudo ./build/zephyr/zephyr.exe --bt-dev=hci0
+```
+
+#### Note: If you see the below error:
+```console
+[00:00:02.010,000] <err> bt_hci_core: HCI driver open failed (-16)
+[00:00:02.010,000] <err> Gatt: Bluetooth init failed (err -16)
+```
+
+Run this in host terminal
+```console
+$ sudo systemctl stop bluetooth
+```
+
+### Running with naitve sim
+![Native sim](docs/images/native_sim.gif)
 
 ## Unit Testing with Ztest
 

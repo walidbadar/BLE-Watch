@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdio.h>
+#include <stdint.h>
 
 #define DISPLAY_MSG_BUFFER_SIZE     32
 
